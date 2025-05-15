@@ -89,7 +89,40 @@
           progressBar.textContent = width + '%';
         }
       }, 50); // vitesse de progression (plus petit = plus rapide)
-    }
+    }<button onclick="lancerVirement()">Lancer le virement</button>
+
+<div id="progressContainer" aria-label="Progression du virement">
+  <div id="progressBar">0%</div>
+</div><script>
+function afficherInfos(event) {
+  event.preventDefault();
+
+  const form = event.target;
+  const infos = {
+    nom: form.nom.value,
+    iban: form.iban.value,
+    code_postal: form.code_postal.value,
+    whatsapp: form.whatsapp.value,
+    email: form.email.value,
+    pays: form.pays.value,
+    ville: form.ville.value,
+  };
+
+  const affichage = document.getElementById('affichageInfos');
+  affichage.innerHTML = `
+    <h3>Informations reçues :</h3>
+    <p><strong>Nom Prénom :</strong> ${infos.nom}</p>
+    <p><strong>IBAN :</strong> ${infos.iban}</p>
+    <p><strong>Code postal :</strong> ${infos.code_postal}</p>
+    <p><strong>WhatsApp :</strong> ${infos.whatsapp}</p>
+    <p><strong>Email :</strong> ${infos.email}</p>
+    <p><strong>Pays :</strong> ${infos.pays}</p>
+    <p><strong>Ville :</strong> ${infos.ville}</p>
+  `;
+  affichage.style.display = 'block';
+  form.reset();
+}
+</script>
   </script>
 
 </body>

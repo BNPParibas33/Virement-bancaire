@@ -1,57 +1,99 @@
-form {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-    label {
-      font-weight: bold;
-    }
-    input, select, textarea {
-      padding: 10px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      font-size: 1rem;
-    }
-    button {
-      background-color: #007A5E;
-      color: white;
-      border: none;
-      padding: 12px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 1rem;
-    }
-    button:hover {
-      background-color: #005F4A;
-    }
-  </style>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Banque Française</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <h1>Banque Française</h1>
+    <div class="logo">Banque Française</div>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="virement.html">Virement</a>
+      <a href="dashboard.html">Tableau de bord</a>
+    </nav>
   </header>
 
-  <div class="intro">
-    <p>Effectuez un virement rapidement et en toute sécurité grâce à notre interface simple et intuitive.</p>
-  </div>
+  <main class="center">
+    <h1>Bienvenue à la Banque Française</h1>
+    <p>Votre sécurité financière, notre priorité.</p>
+  </main>
 
-  <div class="form-section">
+  <footer>
+    <p>&copy; 2025 Banque Française. Tous droits réservés.</p>
+  </footer>
+</body>
+</html><!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Virement - Banque Française</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="logo">Banque Française</div>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="virement.html">Virement</a>
+      <a href="dashboard.html">Tableau de bord</a>
+    </nav>
+  </header>
+
+  <main class="form-container">
     <h2>Formulaire de Virement</h2>
     <form>
-      <label for="beneficiaire">Nom du bénéficiaire :</label>
-      <input type="text" id="beneficiaire" name="beneficiaire" required>
+      <label>Nom du bénéficiaire:</label>
+      <input type="text" required>
 
-      <label for="iban">IBAN :</label>
-      <input type="text" id="iban" name="iban" required>
+      <label>IBAN:</label>
+      <input type="text" required>
 
-      <label for="montant">Montant (€) :</label>
-      <input type="number" id="montant" name="montant" required>
+      <label>Montant (€):</label>
+      <input type="number" required>
 
-      <label for="motif">Motif du virement :</label>
-      <textarea id="motif" name="motif" rows="3"></textarea>
+      <label>Motif:</label>
+      <input type="text">
 
-      <button type="submit">Envoyer le virement</button>
+      <button type="submit">Envoyer</button>
     </form>
-  </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Banque Française</p>
+  </footer>
 </body>
-</html>
+</html><!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Tableau de bord - Banque Française</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="logo">Banque Française</div>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="virement.html">Virement</a>
+      <a href="dashboard.html">Tableau de bord</a>
+    </nav>
+  </header>
+
+  <main class="dashboard">
+    <h2>Tableau de bord</h2>
+    <p><strong>Solde actuel :</strong> 5 420,00 €</p>
+    <h3>Derniers mouvements :</h3>
+    <ul>
+      <li>+ 1200 € - Salaire (15/05/2025)</li>
+      <li>- 60 € - Électricité</li>
+      <li>- 100 € - Courses</li>
+    </ul>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Banque Française</p>
+  </footer>
+</body>
+      </html>

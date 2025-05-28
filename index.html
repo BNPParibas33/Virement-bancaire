@@ -1,1 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Connexion - BNP Paribas</title>
+  <style>
+    body {
+      background-color: #f4f4f4;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/BNP_Paribas.svg/2560px-BNP_Paribas.svg.png');
+      background-repeat: no-repeat;
+      background-position: center top;
+      background-size: 200px;
+    }
+    .login-box {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 350px;
+      width: 100%;
+    }
+    h1 {
+      color: #006241;
+      margin-bottom: 20px;
+    }
+    input[type="password"] {
+      padding: 10px;
+      width: 80%;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #006241;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #004f34;
+    }
+    .error {
+      color: red;
+      display: none;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-box">
+    <h1>Bienvenue</h1>
+    <p>Bienvenue sur le site web officiel de virement bancaire de BNP Paribas France</p>
+    <input type="password" id="password" placeholder="Mot de passe" />
+    <button onclick="checkPassword()">Connexion</button>
+    <p class="error" id="error">Mot de passe incorrect.</p>
+  </div>
 
+  <script>
+    function checkPassword() {
+      const password = document.getElementById("password").value;
+      const correctPassword = "BNP2024France"; // Mot de passe à changer
+
+      if (password === correctPassword) {
+        window.location.href = "index.html"; // Page d'accueil du site
+      } else {
+        document.getElementById("error").style.display = "block";
+      }
+    }
+  </script>
+</body>
+</html>
